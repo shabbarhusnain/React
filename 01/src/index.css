@@ -1,0 +1,9 @@
+@import "tailwindcss";
+.root{
+    text-align:center;
+    font-size: medium;
+    font-family: sans-serif;
+    color: white;
+    background-color: darkolivegreen;
+    background: fixed;
+}

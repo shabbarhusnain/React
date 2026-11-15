@@ -1,0 +1,26 @@
+@import "tailwindcss";
+.heading{
+   h1{text-align:center;
+   font-style:bold;
+    font-size: 100px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    color: white;
+    background-color: rgb(0, 0, 0);}
+    h3{
+    text-align:center;
+    font-style:italic;
+    font-size: 20px;
+    font-family: 'Calibri';
+    color: white;
+    background-color: rgb(0, 0, 0);
+    }
+}    
+@keyframes slide-loop {
+    0% {
+      transform: translateX(0%);
+    }
+    100% {
+      transform: translateX(100%);
+    }
+    
+  }
