@@ -5,11 +5,11 @@ import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { useForm } from 'react-hook-form'
 
-function PostForm(post) {
-   const [register,handleSubmit,watch,setValue,getValues,control] = useForm({
+function PostForm({post}) {
+   const {register,handleSubmit,watch,setValue,getValues,control} = useForm({
       defaultValues:{
         title:post?post.title:"",
-        slug:post?post.slug:"",
+        slug:post?post.$id:"",
         content:post?post.content:"",
         status:post?post.status:"active"
       }
@@ -24,9 +24,9 @@ function PostForm(post) {
         if (image){
             await databaseServices.deleteFile(data.featuredimage)
         }
-        const fileId=image.$id
+        const fileId=image?image.$id:""
         await databaseServices.updatePost(userData.$id,{...data,featuredimage:image? fileId :undefined})
-        navigate(`/post/${userData.$id}`)
+        navigate(`/post/${post.$id}`)
       }else{
         const image = data.image[0]? await databaseServices.uploadFile(data.image[0]):undefined;
         if (image){
@@ -34,19 +34,19 @@ function PostForm(post) {
           data.featuredimage=fileId
           const newPost = await databaseServices.createPost({...data,userid:userData.$id})
           if (newPost){
-            navigate(`/post/${userData.$id}`)
+            navigate(`/post/${newPost.$id}`)
           }
         }
       }    
     }
 
     const slugTransform = useCallback((value)=>{
-      if(value && typeof value === String){
+      if(value && typeof value === "string"){
         return value
           .trim()
           .toLowerCase()
-          .replace(/^[a-zA-Z\d\s]+/g,'-')
-          .replace(/s\+/g,"-")
+          .replace(/[^a-zA-Z\d\s]+/g,'-')
+          .replace(/\s+/g,"-")
       }
       return ""
     },[])
@@ -54,7 +54,7 @@ function PostForm(post) {
    useEffect(()=>{
     const subscription = watch((value,{name})=>{
       if(name=="title"){
-        setValue("slug",slugTransform(value.title,{shouldValidate:truee}))
+        setValue("slug",slugTransform(value.title,{shouldValidate:true}))
       }
       subscription.unsubscribe()
     },[watch,slugTransform,])
@@ -79,14 +79,15 @@ function PostForm(post) {
         placeholder="Slug"
         className="w-full px-4 py-2.5 rounded-lg"
         {...register("slug", { required: true })}
-        onInput={(e) => setValue("slug", slugTransform(e.currentTarget.value), { shouldValidate: true })}
+        onInput={(e) => setValue("slug", slugTransform(e.currentTarget.value))}
       />
 
       <RTE
         label="Write your blog here..."
         name="content"
         control={control}
-        defaultValue={post ? getValues("content") : ""}
+        defaultValue={ getValues("content") }
+        
       />
     </div>
 
@@ -120,7 +121,7 @@ function PostForm(post) {
       <Button
         type="submit"
         className="btn-primary w-full py-3 px-6 rounded-lg cursor-pointer"
-        children={post ? "Update Blog" : "Post Blog"}
+        children={post? "Update Blog" : "Post Blog"}
       />
     </div>
 

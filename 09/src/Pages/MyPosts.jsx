@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from 'react'
-import { Container,  } from '../components'
+import { Container,PostCard  } from '../components/index'
 import databaseServices from '../Backend/Database'
 import { Query } from 'appwrite'
 import { useSelector } from 'react-redux'
-import {Post} from '../components'
+
 function MyPosts() {
   const [post, setPost] = useState([])
   const userData = useSelector((state)=>state.auth.userData)
-  const id = userData.$Id
   useEffect(()=>{
-    databaseServices.postList([Query.equal("userId",userData.$id)]).then((post)=>{
+    databaseServices.postList([Query.equal("userid",userData.$id)]).then((post)=>{
       if(post){
-        setPost(post)
+        setPost(post.documents)
       }
     })
   },[])

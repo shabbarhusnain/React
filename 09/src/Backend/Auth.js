@@ -33,7 +33,7 @@ export class AuthBlueprint{
     // 3 gett current user in app 
     async getCurrentUser(){
         try {
-            await this.account.get()
+            return await this.account.get()
         } catch (error) {
             throw new Error(`${error.message}::"This error is occur in getCurrentUser of AuthBlueprint in Backend."`);
         }

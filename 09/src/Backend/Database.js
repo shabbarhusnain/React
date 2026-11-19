@@ -53,10 +53,9 @@ export class DatabaseBlueprint{
     async singlePost(slug){
         try {
             return this.database.getDocument(config.appwriteDatabaseId,config.appwriteCollectionId,slug);
-            return true;
+
         } catch (error) {
             throw new Error(`${error},"This error is occured at SinglePost in database.js"`);
-            return false;
         }
     };
     // all Active post
@@ -95,9 +94,11 @@ export class DatabaseBlueprint{
         }
     }
     // preview image
-    async previewFile(fileId){
+     previewFile(fileId){
         try {
-            return await this.bucket.getFilePreview(config.appwriteBucketId,fileId)
+            if (!fileId) return "";
+            const fileUrl=this.bucket.getFileView(config.appwriteBucketId, fileId);
+            return String(fileUrl).replace("&impersonateuserid=", "")
         } catch (error) {
             throw new Error(`${error},"This error is occured at previewFile in database.js"`);
         }

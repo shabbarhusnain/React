@@ -3,7 +3,7 @@ import {useForm} from 'react-hook-form'
 import AuthService from '../Backend/Auth'
 import {useDispatch} from 'react-redux'
 import {login as loginAction} from '../store/authSlice'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate,Link } from 'react-router-dom'
 import {Logo,Button,Input} from './index'
 function Login() {
     const {register,handleSubmit} =useForm()
@@ -16,7 +16,7 @@ function Login() {
             const session = await AuthService.login(data)
             if (session){
                 const userData = await AuthService.getCurrentUser()
-                if (userData) dispatch(loginAction(userData))
+                if (userData) dispatch(loginAction({userData}))
                 navigate('/')
             }
         } catch (error) {
@@ -63,7 +63,7 @@ function Login() {
                 type='submit'>Login</Button>
             </div>
             <div className='mb-3 mx-auto'>
-                <Link to={'/signup'}><p >If you don't have Account? <p className='hover:text-cyan-700'>Register</p></p></Link>
+                <Link to={'/signup'}><p1 >If you don't have Account? <p className='hover:text-cyan-700'>Register</p></p1></Link>
             </div>
         </form>
     </div>

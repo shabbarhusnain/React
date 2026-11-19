@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import {useSelector} from 'react-redux'
 import {useNavigate} from 'react-router-dom'
-export default function Protection({childred,authentication=true}) {
+export default function Protection({children,authentication=true}) {
     const [isloading, setIsLoading] = useState(true)
     const authStatus = useSelector((state)=>state.auth.status)
     const navigate=useNavigate()
@@ -13,6 +13,6 @@ export default function Protection({childred,authentication=true}) {
         }
         setIsLoading(false)
     },[authStatus,authentication,navigate])
-  return isloading ? <h1>Loading...</h1> : {childred} 
+  return isloading ? <h1>Loading...</h1> : <>{children} </>
 }
 

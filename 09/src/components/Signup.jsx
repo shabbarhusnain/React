@@ -2,25 +2,25 @@ import React, { useState } from 'react'
 import {useForm} from 'react-hook-form'
 import AuthService from '../Backend/Auth'
 import {useDispatch, useSelector} from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate,Link } from 'react-router-dom'
 import {Logo,Button,Input} from './index'
 import { login } from '../store/authSlice'
 function Signup() {
-    const {register,handleSubmit,getValues} =useForm()
+    const {register,handleSubmit,getValues,formState:{errors}} =useForm()
     const [error,setError] = useState()
     const dispatch = useDispatch()
-    const selector =useSelector()
+
     const navigate = useNavigate()
     const SignupHandle = async(data)=>{
         setError("")
         try {
             const session = await AuthService.createAccount(
-                name=data.name,email=data.email, password=data.password
+                {...data}
             )
             if (session){
                 const userData =await AuthService.getCurrentUser()
                 if (userData){
-                    dispatch(login(userData))
+                    dispatch(login({userData}))
                     navigate('/')}}
         } catch (error) {
             setError(error.message)
@@ -63,7 +63,7 @@ function Signup() {
                                    }
                         )
             } />
-            {error.email && <p className='mt-2 px-3 text-red-600 '>{error.email.message}</p>}
+            {errors?.email && <p className='mt-2 px-3 text-red-600 '>{errors.email.message}</p>}
             </div>
             <div className='mt-3 px-3'>
                 <Input
@@ -73,7 +73,7 @@ function Signup() {
                 placeholder='Enter new password...'
                 {...register("password", {required: true,minLength:{value:8,message:"Password not less then 8 characters"}})} 
                 />
-                {error.password && <p className='mt-2 px-3 text-red-600 '>{error.password.message}</p>}
+                {errors?.password && <p className='mt-2 px-3 text-red-600 '>{errors.password.message}</p>}
             </div>
             <div className='mt-3 px-3'>
                 <Input
@@ -83,7 +83,7 @@ function Signup() {
                 placeholder='Confirm password...' 
                 {...register("password2",{required:true,validate:(value)=>value===getValues("password") || "Password not match"})}
                 />
-                {error.password2 && <p className='mt-2 px-3 text-red-600 '>{error.password2.message}</p>}
+                {errors?.password2 && <p className='mt-2 px-3 text-red-600 '>{errors.password2.message}</p>}
             </div>
             <div className='mt-3 px-3'>
                 <Button 
@@ -91,7 +91,7 @@ function Signup() {
                 type='submit'>Create Account </Button>
             </div>
             <div className='mb-3 mx-auto'>
-                <Link to={'/login'}><p >If you already have Account? <p className='hover:text-cyan-700'>Login</p></p></Link>
+                <Link to={'/login'}><p1 >If you already have Account? <p className='hover:text-cyan-700'>Login</p></p1></Link>
             </div>
         </form>
     </div>

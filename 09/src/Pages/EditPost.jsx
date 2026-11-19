@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useNavigate,useParams } from 'react-router-dom'
 import databaseServices from '../Backend/Database'
-import { Container,PostForm } from '../components'
+import { Container,PostForm } from '../components/index'
 function EditPost() {
     const [post, setPost] = React.useState(null)
     const {slug} = useParams()

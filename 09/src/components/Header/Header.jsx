@@ -23,21 +23,32 @@ function Header() {
     },
     {
       id:"03",
+      name:"My Posts",
+      slug:'/my-post',
+      active:authStatus
+    },
+    {
+      id:"04",
       name:"Login",
       slug:"/login",
       active:!authStatus
     },
     {
-      id:"04",
+      id:"05",
       name:"Signup",
       slug:"/signup",
       active:!authStatus
-    }]
+    },{
+      id:"05",
+      name:"Add Post",
+      slug:'/add-post',
+      active:authStatus
+    },]
   return (
     <><Container> <nav className="sticky top-0 z-50 flex justify-between items-center px-6 py-4 bg-orange-200 backdrop-blur-md border-b border-x-amber-950">
   <div className="text-2xl font-bold text-emerald-900">BrandName</div>
   <div className="hidden md:flex items-center gap-8 text-gray-600 font-medium">
-    <link to="/"><Logo /></link>
+    <Link to="/"><Logo /></Link>
     <ul>{navitems.map((item)=>item.active ? (<li 
     key={item.id}>
       <button
