@@ -11,7 +11,7 @@ function Button({
   return (
     <button
     type={type}
-    className={`font-serif text-orange-200 border-2 bg-emerald-900 border-emerald-700  hover:bg-emerald-700 
+    className={`font-serif rounded-xl shadow-md text-orange-200 border-2 bg-emerald-900 border-emerald-700  hover:bg-emerald-700 
       ${bgColor}
        ${textColor}
         ${className}`}

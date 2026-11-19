@@ -12,4 +12,5 @@ import Protection from './AuthLayer'
 import Login from './Login'
 import Signup from './Signup'
 import PostForm from './Post/PostForm'
-export {Header,Footer,Logoutbtn,Container,Logo,Button,Input,PostCard,RTE,Select,Protection,Login,Signup,PostForm}
+import Post from './Post'
+export {Header,Footer,Logoutbtn,Container,Logo,Button,Input,PostCard,RTE,Select,Post,Protection,Login,Signup,PostForm}

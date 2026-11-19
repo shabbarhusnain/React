@@ -63,10 +63,10 @@ export class DatabaseBlueprint{
     async postList(queries=[Query.equal("status","active")]){
         try {
             return this.database.listDocuments(config.appwriteDatabaseId,config.appwriteCollectionId,queries);
-            return true;
+
         } catch (error) {
             throw new Error(`${error},"This error is occured at postlist in database.js"`);
-            return false
+
         }
     }
 //------------------------------------file Storage CRUD operation-----------------------------------------

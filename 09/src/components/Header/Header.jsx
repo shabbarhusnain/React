@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import AuthService from '../../Backend/Auth'
 function Header() {
   const authStatus = useSelector((state)=>(state.auth.status))
+  const userData= useSelector((state)=>(state.auth.userData))
   const navigate= useNavigate()
   const navitems=[
     {
@@ -45,7 +46,7 @@ function Header() {
       >{item.name}</button>
       </li>) : null)}</ul>
   </div>
-  {authStatus && <Logoutbtn />}
+  {authStatus && userData ? <Logoutbtn />: null}
     
 
 </nav></Container></>
